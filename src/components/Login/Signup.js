@@ -105,7 +105,7 @@ class SignUp extends React.Component {
                     <button className="btn btn-block login-btn mb-4">SignUp</button>
                 </form>
                     <a href="/" className="forgot-password-link">Forgot password?</a>
-                    <p className="login-card-footer-text">Already have an account? <Link to="/login" className="text-reset">Login here</Link></p>
+                    <p className="login-card-footer-text">Already have an account? <Link to="/" className="text-reset">Login here</Link></p>
                     <nav className="login-card-footer-nav">
                       <a href="/">Terms of use.</a>
                       <a href="/">Privacy policy</a>
