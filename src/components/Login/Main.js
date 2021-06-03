@@ -12,7 +12,12 @@ import TodoApp from './Todo'
 class Main extends React.Component {
 
   componentDidMount(){
+      window.scrollTo(0,0)
     this.authListener()
+  }
+
+  componentDidUpdate(){
+    window.scrollTo(0,0)
   }
 
   state = {hasAccount :false,errorMsg : '',isVisible:false, user:null}
@@ -82,7 +87,7 @@ class Main extends React.Component {
     return (
         <>
             {!this.state.hasAccount && <Login onSubmit={this.onLoginSubmit} isVisible={this.state.isVisible} errorMsg={this.state.errorMsg}/>}
-            {this.state.hasAccount && <TodoApp onLogoutClick={this.handleLogout}/>}
+            {this.state.hasAccount && <TodoApp user={this.state.user} onLogoutClick={this.handleLogout}/>}
         </>
     )
   }
