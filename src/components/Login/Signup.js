@@ -83,7 +83,7 @@ class SignUp extends React.Component {
   }
   render(){
     return (
-        <main className="d-flex align-items-center min-vh-100 py-3 py-md-0" style={{marginTop:'-50px'}}>
+        <main className="d-flex align-items-center min-vh-100 py-3 py-md-0" style={{marginTop:'0px'}}>
         <div className="container">
           <div className="card login-card">
             <div className="row no-gutters">

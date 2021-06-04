@@ -13,11 +13,16 @@ body {
     rgba(100, 115, 255, 1) 100%
   );
 }
+
+.loaderStyle{
+    left:50%;
+    top:50%
+}
 .todo-app {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: 100%;
+  width: 600px;
   min-height: 500px;
   padding-top: 50px !important;
   background: #161a2bde;
@@ -36,6 +41,12 @@ h1 {
 .complete {
   text-decoration: line-through;
   opacity: 0.4;
+}
+
+.incomplete{
+    padding:0px !important;
+    padding-left:15px !important;
+
 }
 
 .todo-form {
@@ -148,6 +159,14 @@ h1 {
 }
 
 @media only screen and (max-width: 575.98px) { 
+
+    .todo-app{
+        width:100%;
+    }
+    .loaderStyle{
+        left:40%;
+        top:40%;
+    }
     .todo-button {
         margin-top: 0px !important;
         padding: 16px;

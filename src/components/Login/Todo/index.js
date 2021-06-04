@@ -4,7 +4,6 @@ import TodoList from './TodoList';
 export class TodoApp extends Component {
     render() {
         const {user}  = this.props;
-        console.log(user)
         return (
             <div style={{padding:'20px'}}>
                <h5 style={{color:'white',fontWeight:'bold',}}>Hii {user.email}<br/>Welcome to Todo App !</h5>

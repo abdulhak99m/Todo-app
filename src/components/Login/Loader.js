@@ -6,7 +6,7 @@ export class Loader1 extends Component {
         return (
             <div>
                     <div style={{height:'100vh',textAlign:'center',position:'relative'}}>
-                        <div style={{position:'absolute',top:'40%',left:'40%'}}>
+                        <div className="loaderStyle" style={{position:'absolute'}}>
                             <Loader
                             type="Bars"
                             color="white"

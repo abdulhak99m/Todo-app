@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
 import {db} from '../../../firebase'
+import firebase from '../../../firebase'
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
   const [todosList, setTodosList] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+
+  useEffect(() => {
+    authListener()
+},[])
+
 
   useEffect(() => {
       db.child('todos').on('value',snapshot => {
@@ -16,30 +24,49 @@ function TodoList() {
       })
   },[])
 
+  const authListener = () => {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+       setUserId(user.uid)
+       setUserEmail(user.email)
+      }
+
+      else{
+        setUserId(null)
+        setUserEmail(null)
+      }
+    })
+  }
+
+  
+
   const addTodo = todo => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
 
+    let date = new Date().toDateString();
+    console.log(date)
+
     db.child('todos').push(
-        todo,err => {
+        {...todo,userId:userId,email:userEmail,isComplete:false,createdAt:date},err => {
             if(err)
             console.log(err)
         }
     )
 
-    const newTodos = [todo, ...todos];
+    // const newTodos = [todo, ...todos];
 
-    setTodos(newTodos);
+    // setTodos(newTodos);
   };
 
   const updateTodo = (todoId, newValue,dbId) => {
     if (!newValue.text || /^\s*$/.test(newValue.text)) {
       return;
     }
-
+    let date = new Date();
     db.child(`todos/${dbId}`).set(
-        newValue,err => {
+        {...newValue,userId:userId,email:userEmail,date:date},err => {
             if(err)
             console.log(err)
         }
@@ -50,22 +77,32 @@ function TodoList() {
 
   const removeTodo = (id,dbId) => {
     const removedArr = [...todos].filter(todo => todo.id !== id);
+    
     db.child(`todos/${dbId}`).remove(err => {
             if(err)
             console.log(err)
         }
     )
-    setTodos(removedArr);
+    // setTodos(removedArr);
   };
 
-  const completeTodo = id => {
-    let updatedTodos = todos.map(todo => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
+  const completeTodo = (newValue,dbId) => {
+    let date = new Date();
+
+    db.child(`todos/${dbId}`).set(
+        {text:newValue,userId:userId,email:userEmail,isComplete:true,date:date},err => {
+            if(err)
+            console.log(err)
+        }
+    )
+
+    // let updatedTodos = todos.map(todo => {
+    //   if (todo.id === id) {
+    //     todo.isComplete = !todo.isComplete;
+    //   }
+    //   return todo;
+    // });
+    // setTodos(updatedTodos);
   };
 
   return (
@@ -74,6 +111,8 @@ function TodoList() {
       <TodoForm onSubmit={addTodo} />
       <Todo
         todos={todosList}
+        userId={userId}
+        addTodo={addTodo}
         completeTodo={completeTodo}
         removeTodo={removeTodo}
         updateTodo={updateTodo}
