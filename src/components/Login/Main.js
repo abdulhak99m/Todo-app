@@ -6,6 +6,7 @@ import '../../assets/css/login.css'
 import Signup from './Signup'
 import Login from './Login'
 import TodoApp from './Todo'
+import Loader from './Loader'
 
 
 
@@ -20,7 +21,7 @@ class Main extends React.Component {
     window.scrollTo(0,0)
   }
 
-  state = {hasAccount :false,errorMsg : '',isVisible:false, user:null}
+  state = {hasAccount :null,errorMsg : '',isVisible:false, user:null}
 
   onSignUpSubmit = (formValues) => {
     this.setState({errorMsg:'',isVisible:false})
@@ -76,6 +77,7 @@ class Main extends React.Component {
     firebase.auth().onAuthStateChanged(user => {
       if(user){
         this.setState({hasAccount:true,user:user})
+
       }
 
       else{
@@ -86,7 +88,8 @@ class Main extends React.Component {
   render(){
     return (
         <>
-            {!this.state.hasAccount && <Login onSubmit={this.onLoginSubmit} isVisible={this.state.isVisible} errorMsg={this.state.errorMsg}/>}
+            {this.state.hasAccount == null && <Loader/>} 
+            {this.state.hasAccount == false && <Login onSubmit={this.onLoginSubmit} isVisible={this.state.isVisible} errorMsg={this.state.errorMsg}/>}
             {this.state.hasAccount && <TodoApp user={this.state.user} onLogoutClick={this.handleLogout}/>}
         </>
     )

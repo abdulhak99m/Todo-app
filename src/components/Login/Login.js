@@ -39,7 +39,7 @@ class Login extends React.Component {
 
   render(){
     return (
-        <main className="d-flex align-items-center min-vh-100 py-3 py-md-0">
+        <main className="d-flex align-items-center min-vh-100 py-3 py-md-0" style={{marginTop:'-50px'}}>
         <div className="container">
           <div className="card login-card">
             <div className="row no-gutters">
@@ -62,8 +62,8 @@ class Login extends React.Component {
                 </form>
                     <p className="login-card-footer-text">Don't have an account? <Link to="/signup" className="text-reset">Register here</Link></p>
                     <nav className="login-card-footer-nav">
-                      <a href="/">Terms of use.</a>
-                      <a href="/">Privacy policy</a>
+                      {/* <a href="/">Terms of use.</a>
+                      <a href="/">Privacy policy</a> */}
                     </nav>
                 </div>
               </div>
