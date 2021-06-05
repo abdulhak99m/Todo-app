@@ -1,12 +1,13 @@
 import firebase from 'firebase'
 
 var firebaseConfig = {
-    apiKey: "AIzaSyDqU4Vpc8NzAQYe7sGosbxpgsG-y2W4cEw",
-    authDomain: "todo-app-21f9d.firebaseapp.com",
-    projectId: "todo-app-21f9d",
-    storageBucket: "todo-app-21f9d.appspot.com",
-    messagingSenderId: "291798809530",
-    appId: "1:291798809530:web:e27b855259d3f307eebb83"
+    apiKey: "AIzaSyAS6RgbNbxMOfY1RaqeLnlhdmVOqrqE0A8",
+    authDomain: "convo-c6304.firebaseapp.com",
+    projectId: "convo-c6304",
+    storageBucket: "convo-c6304.appspot.com",
+    messagingSenderId: "894390327963",
+    appId: "1:894390327963:web:8834a57c28eba56507043e",
+    measurementId: "G-ZVL6TC4JTS"
   };
   const fire = firebase.initializeApp(firebaseConfig);
 
