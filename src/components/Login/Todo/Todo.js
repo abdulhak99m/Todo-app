@@ -113,10 +113,10 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo, userId,addTodo ,add
               onClick={() => removeTodo(todos[todo].id,todo)}
               className='delete-icon'
             />
-            <TiEdit
+            {/* <TiEdit
               onClick={() => setEdit({ id: todos[todo].id, value: todos[todo].text,dbId: todo})}
               className='edit-icon'
-            />
+            /> */}
             {todos[todo].isComplete === false && <div style={{backgroundColor:'#5d0cff',padding:'10px 10px',marginLeft:'15px',cursor:'pointer'}}>
              <TiTick
                onClick={() => completeTodo(todos[todo],todo, todos[todos[todo].todo_uid],todos[todo].todo_uid)}
