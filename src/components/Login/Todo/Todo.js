@@ -9,13 +9,15 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo, userId,addTodo ,add
     id: null,
     dbId:null,
     data:{},
-    value: ''
+    value: '',
+    userData:{},
+    uId:null
   });
 
 
 
   const submitUpdate = value => {
-    updateTodo(edit.id, value,edit.dbId,edit.data);
+    updateTodo(edit.id, value,edit.dbId,edit.data,edit.userData,edit.uId);
     setEdit({
       dbId:null,
       id: null,
@@ -61,7 +63,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo, userId,addTodo ,add
               className='delete-icon'
             />
             <TiEdit
-              onClick={() => setEdit({ id: todos[todo].id, value: todos[todo].text,dbId: todo,data:todos[todo]})}
+              onClick={() => setEdit({ id: todos[todo].id, value: todos[todo].text,dbId: todo,data:todos[todo],userData:todos[todos[todo].todo_uid],uId:todos[todo].todo_uid})}
               className='edit-icon'
             />
               { !todos[todo].isComplete && todos[todo].is_added && <p style={{fontSize:'0.9rem',marginRight:'10px',marginLeft:'10px'}}>Not Completed</p> }

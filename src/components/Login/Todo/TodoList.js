@@ -24,6 +24,15 @@ function TodoList() {
       })
   },[])
 
+//   useEffect(() => {
+//     db.child('todos').on('value',snapshot => {
+//         if(snapshot.val() != null)
+//         {
+//           setTodosList({...snapshot.val()})
+//         }
+//     })
+// })
+
   const authListener = () => {
     firebase.auth().onAuthStateChanged(user => {
       if(user){
@@ -60,7 +69,7 @@ function TodoList() {
     // setTodos(newTodos);
   };
 
-  const addOthersTodo = (todo, data) => {
+  const addOthersTodo = async (todo, data) => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
@@ -68,15 +77,16 @@ function TodoList() {
     let date = new Date().toDateString();
     console.log(date)
 
-    db.child('todos').push(
+    let new_todo = await db.child('todos').push(
         {...todo,userId:userId,email:userEmail,isComplete:false,createdAt:date,type:'other'},err => {
             if(err)
             console.log(err)
         }
     )
 
+
     db.child(`todos/${todo.todo_uid}`).set(
-      {...data,reciever_id:todo.id,reciever_email:userEmail,is_added:true},err => {
+      {...data,reciever_id:todo.id,reciever_email:userEmail,is_added:true,todo_uid:new_todo._delegate._path.pieces_[1]},err => {
           if(err)
           console.log(err)
       }
@@ -87,19 +97,49 @@ function TodoList() {
     // setTodos(newTodos);
   };
 
-  const updateTodo = (todoId, newValue,dbId,data) => {
+  const updateTodo = (todoId, newValue,dbId,data,user,uId) => {
+    console.log(user,uId)
     if (!newValue.text || /^\s*$/.test(newValue.text)) {
       return;
     }
     let date = new Date();
+    let text = newValue.text
     db.child(`todos/${dbId}`).set(
-        {...data,newValue},err => {
+        {...data,text},err => {
             if(err)
             console.log(err)
         }
     )
+
+    if(user && uId){
+
+    db.child(`todos/${uId}`).set(
+      {...user,text},err => {
+          if(err)
+          console.log(err)
+      }
+  )
+    }
+
+  // db.child('todos').on('value',snapshot => {
+  //           if(snapshot.val() != null)
+  //           {
+  //             setTodosList({...snapshot.val()})
+  //           }
+  //       })
+
+  db.child("todos").get().then((snapshot) => {
+    if (snapshot.exists()) {
+      setTodosList({...snapshot.val()})
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+
     
-    setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+    
   };
 
   const removeTodo = (id,dbId) => {
